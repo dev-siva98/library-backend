@@ -32,11 +32,10 @@ public class BookServiceImpl implements BookService {
 
         Integer previousBookId = previousIdModel.getPreviousId();
 
-        if (previousBookId < 9) {
+        if (previousBookId < 9)
             bookDetails.set_id("BN00" + ++previousBookId);
-        } else {
+        else
             bookDetails.set_id("BN0" + ++previousBookId);
-        }
 
         previousIdModel.setPreviousId(previousBookId);
         previousIdRepository.save(previousIdModel);
@@ -56,6 +55,23 @@ public class BookServiceImpl implements BookService {
         try {
             Optional<BookModel> optionalBook = bookRepository.findById(bookId);
             return optionalBook.get();
+        } catch (NoSuchElementException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public BookModel updateBook(String bookId, BookModel bookDetails) {
+
+        try {
+            Optional<BookModel> optionalBook = bookRepository.findById(bookId);
+            BookModel book = optionalBook.get();
+            if (book == null)
+                return null;
+
+            bookDetails.set_id(bookId);
+            return bookRepository.save(bookDetails);
+
         } catch (NoSuchElementException e) {
             return null;
         }

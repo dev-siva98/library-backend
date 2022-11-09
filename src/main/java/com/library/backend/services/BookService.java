@@ -11,4 +11,6 @@ public interface BookService {
     public List<BookModel> getAllBooks();
 
     public BookModel getOneBook(String bookId);
+
+    public BookModel updateBook(String bookId, BookModel bookDetails);
 }

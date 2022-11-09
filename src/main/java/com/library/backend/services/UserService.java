@@ -11,4 +11,6 @@ public interface UserService {
     public UserModel userLogin(UserModel userData);
 
     public List<UserModel> getAllUsers();
+
+    public UserModel getOneUser(String userId);
 }

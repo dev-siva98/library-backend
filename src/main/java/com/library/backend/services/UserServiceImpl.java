@@ -2,6 +2,8 @@ package com.library.backend.services;
 
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -60,4 +62,16 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
+    @Override
+    public UserModel getOneUser(String userId) {
+        try {
+            Optional<UserModel> userOptional = userRepository.findById(userId);
+            return userOptional.get();
+        } catch (NoSuchElementException e) {
+            return null;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
 }

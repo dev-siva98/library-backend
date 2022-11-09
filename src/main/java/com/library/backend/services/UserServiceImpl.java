@@ -22,6 +22,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PreviousIdRepository previousIdRepository;
 
+
     @Override
     public UserModel createUser(UserModel userDetails) {
 
@@ -69,9 +70,7 @@ public class UserServiceImpl implements UserService {
             return userOptional.get();
         } catch (NoSuchElementException e) {
             return null;
-        } catch (Exception e) {
-            System.out.println(e);
         }
-        return null;
     }
+    
 }

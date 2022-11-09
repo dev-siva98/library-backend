@@ -3,6 +3,7 @@ package com.library.backend.services;
 import java.util.List;
 
 import com.library.backend.model.BookModel;
+import com.library.backend.model.OrderModel;
 
 
 public interface BookService {
@@ -16,4 +17,7 @@ public interface BookService {
     public BookModel updateBook(String bookId, BookModel bookDetails);
 
     public Boolean deleteBook(String bookId);
+
+    public OrderModel checkoutOrder(OrderModel orderDetails);
+
 }

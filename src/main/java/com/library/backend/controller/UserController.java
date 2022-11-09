@@ -21,7 +21,7 @@ public class UserController {
     private UserServiceImpl userServiceImpl;
 
     @PostMapping("/signup")
-    public UserModel signup(@RequestBody UserModel userDetails ) {
+    public UserModel signup(@RequestBody UserModel userDetails) {
         return userServiceImpl.createUser(userDetails);
     }
 
@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @GetMapping("/get/{id}")
-    public UserModel getOneUser(@PathVariable("id") String userId){
+    public UserModel getOneUser(@PathVariable("id") String userId) {
         return userServiceImpl.getOneUser(userId);
     }
 }

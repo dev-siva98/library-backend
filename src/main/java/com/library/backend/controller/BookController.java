@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.library.backend.model.BookModel;
+import com.library.backend.model.OrderModel;
 import com.library.backend.services.BookService;
 
 @RestController
@@ -45,5 +46,10 @@ public class BookController {
     @DeleteMapping("/delete/{id}")
     public Boolean deleteBook(@PathVariable("id") String bookId) {
         return bookService.deleteBook(bookId);
+    }
+
+    @PostMapping("/checkout")
+    public OrderModel checkoutOrder(@RequestBody OrderModel orderDetails) {
+        return bookService.checkoutOrder(orderDetails);
     }
 }

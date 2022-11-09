@@ -49,7 +49,7 @@ public class BookServiceImpl implements BookService {
         bookDetails.setCopiesAvailable(bookDetails.getTotalCopies());
 
         bookDetails.setCreatedAt(new Date());
-        
+
         return bookRepository.save(bookDetails);
     }
 
@@ -110,6 +110,18 @@ public class BookServiceImpl implements BookService {
 
         orderModelList.add(orderDetails);
         orderRepository.saveAll(orderModelList); // saveAll saves iterable OrderModel
+
+        PreviousIdModel previousIdModel = previousIdRepository.findByType("book");
+
+        Integer previousOrderId = previousIdModel.getPreviousId();
+
+        if (previousOrderId < 9)
+            orderDetails.set_id("OD00" + ++previousOrderId);
+        else
+            orderDetails.set_id("OD0" + ++previousOrderId);
+
+        previousIdModel.setPreviousId(previousOrderId);
+        previousIdRepository.save(previousIdModel);
 
         // update availableCopies in book
         Optional<BookModel> optionalBook = bookRepository.findById(bookId);

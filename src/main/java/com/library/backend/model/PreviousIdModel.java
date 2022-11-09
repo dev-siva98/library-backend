@@ -10,6 +10,6 @@ import lombok.Data;
 public class PreviousIdModel {
     @Id
     private String _id; //to make sure the same document gets updated with incremented id's
-    private Integer userId;
-    private Integer bookId;
+    private String type;
+    private Integer previousId;
 }

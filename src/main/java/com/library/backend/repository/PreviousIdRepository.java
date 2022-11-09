@@ -6,4 +6,6 @@ import com.library.backend.model.PreviousIdModel;
 
 public interface PreviousIdRepository extends MongoRepository<PreviousIdModel, String> {
 
+    PreviousIdModel findByType(String string);
+
 }

@@ -29,10 +29,10 @@ public class UserServiceImpl implements UserService {
             return null;
         }
 
-        // get document contain previous id's
-        PreviousIdModel previousIds = previousIdRepository.findAll().get(0);
+        // get document contains previous id
+        PreviousIdModel previousIdModel = previousIdRepository.findByType("user");
 
-        Integer previousUserId = previousIds.getUserId();
+        Integer previousUserId = previousIdModel.getPreviousId();
 
         // increment previous id and set as _id in UserModel
         if (previousUserId < 9) {
@@ -42,8 +42,8 @@ public class UserServiceImpl implements UserService {
         }
 
         // save incremented previousId in PreviousUserModel
-        previousIds.setUserId(previousUserId);
-        previousIdRepository.save(previousIds);
+        previousIdModel.setPreviousId(previousUserId);
+        previousIdRepository.save(previousIdModel);
 
         userDetails.setCreatedAt(new Date());
         return userRepository.save(userDetails);

@@ -1,6 +1,9 @@
 package com.library.backend.services;
 
 import java.util.Date;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,6 +44,21 @@ public class BookServiceImpl implements BookService {
         bookDetails.setCreatedAt(new Date());
 
         return bookRepository.save(bookDetails);
+    }
+
+    @Override
+    public List<BookModel> getAllBooks() {
+        return bookRepository.findAll();
+    }
+
+    @Override
+    public BookModel getOneBook(String bookId) {
+        try {
+            Optional<BookModel> optionalBook = bookRepository.findById(bookId);
+            return optionalBook.get();
+        } catch (NoSuchElementException e) {
+            return null;
+        }
     }
 
 }

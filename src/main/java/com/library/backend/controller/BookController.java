@@ -1,6 +1,10 @@
 package com.library.backend.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,5 +23,15 @@ public class BookController {
     @PostMapping("/addbook")
     public BookModel addBook(@RequestBody BookModel bookData) {
         return bookService.addBook(bookData);
+    }
+
+    @GetMapping("/get/all")
+    public List<BookModel> getAllBooks() {
+        return bookService.getAllBooks();
+    }
+
+    @GetMapping("/get/{id}")
+    public BookModel getOneBook(@PathVariable("id") String bookId) {
+        return bookService.getOneBook(bookId);
     }
 }

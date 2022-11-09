@@ -16,7 +16,8 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    // @PostMapping("/addbook")
-    // public BookModel addBook(@RequestBody BookModel bookData) {
-    // }
+    @PostMapping("/addbook")
+    public BookModel addBook(@RequestBody BookModel bookData) {
+        return bookService.addBook(bookData);
+    }
 }

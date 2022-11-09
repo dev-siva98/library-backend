@@ -1,6 +1,7 @@
 package com.library.backend.services;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,19 +27,19 @@ public class UserServiceImpl implements UserService {
             return null;
         }
 
-        // get document contains previous id's
+        // get document contain previous id's
         PreviousIdModel previousIds = previousIdRepository.findAll().get(0);
 
         Integer previousUserId = previousIds.getUserId();
 
-        //increment previous id and set as _id in UserModel
+        // increment previous id and set as _id in UserModel
         if (previousUserId < 9) {
             userData.set_id("UN00" + ++previousUserId);
         } else {
             userData.set_id("UN0" + ++previousUserId);
         }
 
-        //save incremented previous id in PreviousUserModel
+        // save incremented previousId in PreviousUserModel
         previousIds.setUserId(previousUserId);
         previousIdRepository.save(previousIds);
 
@@ -52,6 +53,11 @@ public class UserServiceImpl implements UserService {
         if (user == null)
             return null;
         return user;
+    }
+
+    @Override
+    public List<UserModel> getAllUsers() {
+        return userRepository.findAll();
     }
 
 }

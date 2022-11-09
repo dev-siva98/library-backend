@@ -77,4 +77,13 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    @Override
+    public Boolean deleteBook(String bookId) {
+        if (bookRepository.existsById(bookId)) {
+            bookRepository.deleteById(bookId);
+            return true;
+        }
+        return false;
+    }
+
 }

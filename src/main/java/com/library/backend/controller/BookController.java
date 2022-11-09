@@ -1,5 +1,22 @@
 package com.library.backend.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.library.backend.model.BookModel;
+import com.library.backend.services.BookService;
+
+@RestController
+@RequestMapping("/book")
 public class BookController {
-    
+
+    @Autowired
+    private BookService bookService;
+
+    // @PostMapping("/addbook")
+    // public BookModel addBook(@RequestBody BookModel bookData) {
+    // }
 }

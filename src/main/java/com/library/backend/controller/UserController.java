@@ -21,13 +21,13 @@ public class UserController {
     private UserServiceImpl userServiceImpl;
 
     @PostMapping("/signup")
-    public UserModel signup(@RequestBody UserModel userData ) {
-        return userServiceImpl.createUser(userData);
+    public UserModel signup(@RequestBody UserModel userDetails ) {
+        return userServiceImpl.createUser(userDetails);
     }
 
     @PostMapping("/login")
-    public UserModel login(@RequestBody UserModel userData) {
-        return userServiceImpl.userLogin(userData);
+    public UserModel login(@RequestBody UserModel userDetails) {
+        return userServiceImpl.userLogin(userDetails);
     }
 
     @GetMapping("/get/all")

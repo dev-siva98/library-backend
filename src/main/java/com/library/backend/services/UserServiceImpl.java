@@ -23,9 +23,9 @@ public class UserServiceImpl implements UserService {
     private PreviousIdRepository previousIdRepository;
 
     @Override
-    public UserModel createUser(UserModel userData) {
+    public UserModel createUser(UserModel userDetails) {
 
-        if (userRepository.existsByEmail(userData.getEmail())) {
+        if (userRepository.existsByEmail(userDetails.getEmail())) {
             return null;
         }
 
@@ -36,22 +36,22 @@ public class UserServiceImpl implements UserService {
 
         // increment previous id and set as _id in UserModel
         if (previousUserId < 9) {
-            userData.set_id("UN00" + ++previousUserId);
+            userDetails.set_id("UN00" + ++previousUserId);
         } else {
-            userData.set_id("UN0" + ++previousUserId);
+            userDetails.set_id("UN0" + ++previousUserId);
         }
 
         // save incremented previousId in PreviousUserModel
         previousIds.setUserId(previousUserId);
         previousIdRepository.save(previousIds);
 
-        userData.setCreatedAt(new Date());
-        return userRepository.save(userData);
+        userDetails.setCreatedAt(new Date());
+        return userRepository.save(userDetails);
     }
 
     @Override
-    public UserModel userLogin(UserModel userData) {
-        UserModel user = userRepository.findByEmailAndPassword(userData.getEmail(), userData.getPassword());
+    public UserModel userLogin(UserModel userDetails) {
+        UserModel user = userRepository.findByEmailAndPassword(userDetails.getEmail(), userDetails.getPassword());
         if (user == null)
             return null;
         return user;

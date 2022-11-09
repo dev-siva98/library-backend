@@ -1,5 +1,9 @@
 package com.library.backend.repository;
 
-public interface BookRepository {
-    
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+import com.library.backend.model.BookModel;
+
+public interface BookRepository extends MongoRepository<BookModel, String> {
+
 }

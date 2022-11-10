@@ -77,8 +77,23 @@ public class BookServiceImpl implements BookService {
             if (book == null)
                 return null;
 
-            bookDetails.set_id(bookId);
-            return bookRepository.save(bookDetails);
+            book.set_id(bookId);
+            book.setTitle(bookDetails.getTitle());
+            book.setAuthor(bookDetails.getAuthor());
+            book.setGenre(bookDetails.getGenre());
+            book.setIsbnNo(bookDetails.getIsbnNo());
+            book.setImg(bookDetails.getImg());
+
+            Integer totalCopiesInDb = book.getTotalCopies();
+            Integer totalCopiesFromUser = bookDetails.getTotalCopies();
+            Integer copiesAvailable = book.getCopiesAvailable();
+
+            if (totalCopiesInDb != totalCopiesFromUser) {
+                book.setCopiesAvailable(copiesAvailable + (totalCopiesFromUser - totalCopiesInDb));
+            }
+            book.setTotalCopies(bookDetails.getTotalCopies());
+
+            return bookRepository.save(book);
 
         } catch (NoSuchElementException e) {
             return null;

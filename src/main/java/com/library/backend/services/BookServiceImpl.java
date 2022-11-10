@@ -77,20 +77,26 @@ public class BookServiceImpl implements BookService {
             if (book == null)
                 return null;
 
-            book.set_id(bookId);
+            // best practice to update each field individually
             book.setTitle(bookDetails.getTitle());
             book.setAuthor(bookDetails.getAuthor());
             book.setGenre(bookDetails.getGenre());
             book.setIsbnNo(bookDetails.getIsbnNo());
             book.setImg(bookDetails.getImg());
 
+            // update copiesAvailable field according to update in the total copies of the
+            // book
             Integer totalCopiesInDb = book.getTotalCopies();
             Integer totalCopiesFromUser = bookDetails.getTotalCopies();
             Integer copiesAvailable = book.getCopiesAvailable();
 
+            // it will edit copiesAvailable according to totalCopies even if it is lesser or
+            // greater
             if (totalCopiesInDb != totalCopiesFromUser) {
                 book.setCopiesAvailable(copiesAvailable + (totalCopiesFromUser - totalCopiesInDb));
             }
+
+            // setting total after the copiesAvailable
             book.setTotalCopies(bookDetails.getTotalCopies());
 
             return bookRepository.save(book);

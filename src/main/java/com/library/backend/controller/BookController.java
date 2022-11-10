@@ -3,6 +3,7 @@ package com.library.backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,42 +15,43 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.library.backend.model.BookModel;
 import com.library.backend.model.OrderModel;
-import com.library.backend.services.BookService;
+import com.library.backend.services.BookServiceImpl;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/book")
 public class BookController {
 
     @Autowired
-    private BookService bookService;
+    private BookServiceImpl bookServiceImpl;
 
     @PostMapping("/addbook")
     public BookModel addBook(@RequestBody BookModel bookData) {
-        return bookService.addBook(bookData);
+        return bookServiceImpl.addBook(bookData);
     }
 
     @GetMapping("/get/all")
     public List<BookModel> getAllBooks() {
-        return bookService.getAllBooks();
+        return bookServiceImpl.getAllBooks();
     }
 
     @GetMapping("/get/{id}")
     public BookModel getOneBook(@PathVariable("id") String bookId) {
-        return bookService.getOneBook(bookId);
+        return bookServiceImpl.getOneBook(bookId);
     }
 
     @PutMapping("/update/{id}")
     public BookModel updateBook(@PathVariable("id") String bookId, @RequestBody BookModel bookDetails) {
-        return bookService.updateBook(bookId, bookDetails);
+        return bookServiceImpl.updateBook(bookId, bookDetails);
     }
 
     @DeleteMapping("/delete/{id}")
     public Boolean deleteBook(@PathVariable("id") String bookId) {
-        return bookService.deleteBook(bookId);
+        return bookServiceImpl.deleteBook(bookId);
     }
 
     @PostMapping("/checkout")
     public OrderModel checkoutOrder(@RequestBody OrderModel orderDetails) {
-        return bookService.checkoutOrder(orderDetails);
+        return bookServiceImpl.checkoutOrder(orderDetails);
     }
 }

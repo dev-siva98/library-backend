@@ -6,7 +6,7 @@ import com.library.backend.model.UserModel;
 
 public interface UserRepository extends MongoRepository<UserModel, String> {
 
-    boolean existsByEmail(String email);
+    Boolean existsByEmail(String email);
 
     UserModel findByEmailAndPassword(String email, String password);
 

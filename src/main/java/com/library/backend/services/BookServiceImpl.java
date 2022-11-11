@@ -38,9 +38,9 @@ public class BookServiceImpl implements BookService {
         Integer previousBookId = previousIdModel.getPreviousId();
 
         if (previousBookId < 9)
-            bookDetails.set_id("BN00" + ++previousBookId);
+            bookDetails.setId("BN00" + ++previousBookId);
         else
-            bookDetails.set_id("BN0" + ++previousBookId);
+            bookDetails.setId("BN0" + ++previousBookId);
 
         previousIdModel.setPreviousId(previousBookId);
         previousIdRepository.save(previousIdModel);
@@ -137,9 +137,9 @@ public class BookServiceImpl implements BookService {
         Integer previousOrderId = previousIdModel.getPreviousId();
 
         if (previousOrderId < 9)
-            orderDetails.set_id("OD00" + ++previousOrderId);
+            orderDetails.setId("OD00" + ++previousOrderId);
         else
-            orderDetails.set_id("OD0" + ++previousOrderId);
+            orderDetails.setId("OD0" + ++previousOrderId);
 
         previousIdModel.setPreviousId(previousOrderId);
         previousIdRepository.save(previousIdModel);

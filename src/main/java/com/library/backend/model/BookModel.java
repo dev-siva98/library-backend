@@ -12,7 +12,7 @@ import lombok.Data;
 public class BookModel {
 
     @Id
-    private String _id;
+    private String id;
     private String title;
     private String author;
     private String isbnNo;

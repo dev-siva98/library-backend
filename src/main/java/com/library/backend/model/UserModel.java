@@ -11,7 +11,7 @@ import lombok.Data;
 @Document(collection = "users")
 public class UserModel {
     @Id
-    private String _id;
+    private String id;
     private String name;
     private String email;
     private String password;

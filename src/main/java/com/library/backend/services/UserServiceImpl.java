@@ -22,7 +22,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PreviousIdRepository previousIdRepository;
 
-
     @Override
     public UserModel createUser(UserModel userDetails) {
 
@@ -37,9 +36,9 @@ public class UserServiceImpl implements UserService {
 
         // increment previous id and set as _id in UserModel
         if (previousUserId < 9) {
-            userDetails.set_id("UN00" + ++previousUserId);
+            userDetails.setId("UN00" + ++previousUserId);
         } else {
-            userDetails.set_id("UN0" + ++previousUserId);
+            userDetails.setId("UN0" + ++previousUserId);
         }
 
         // save incremented previousId in PreviousUserModel
@@ -72,5 +71,5 @@ public class UserServiceImpl implements UserService {
             return null;
         }
     }
-    
+
 }

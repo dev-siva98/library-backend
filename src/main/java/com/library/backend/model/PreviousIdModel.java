@@ -9,7 +9,7 @@ import lombok.Data;
 @Document(collection = "previousIds")
 public class PreviousIdModel {
     @Id
-    private String _id; //to make sure the same document gets updated with incremented id's
+    private String id; //to make sure the same document gets updated with incremented id's
     private String type;
     private Integer previousId;
 }

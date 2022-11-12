@@ -8,4 +8,6 @@ public interface PreviousIdRepository extends MongoRepository<PreviousIdModel, S
 
     PreviousIdModel findByType(String type);
 
+    PreviousIdModel save(PreviousIdModel previousIdModel);
+
 }

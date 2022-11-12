@@ -2,7 +2,6 @@ package com.library.backend.services;
 
 import java.util.Date;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,50 +59,48 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookModel getOneBook(String bookId) {
-        try {
-            Optional<BookModel> optionalBook = bookRepository.findById(bookId);
-            return optionalBook.get();
-        } catch (NoSuchElementException e) {
+        Optional<BookModel> optionalBook = bookRepository.findById(bookId);
+
+        if (!optionalBook.isPresent())
             return null;
-        }
+
+        return optionalBook.get();
     }
 
     @Override
     public BookModel updateBook(String bookId, BookModel bookDetails) {
 
-        try {
-            Optional<BookModel> optionalBook = bookRepository.findById(bookId);
-            BookModel book = optionalBook.get();
-            if (book == null)
-                return null;
+        Optional<BookModel> optionalBook = bookRepository.findById(bookId);
 
-            // best practice to update each field individually
-            book.setTitle(bookDetails.getTitle());
-            book.setAuthor(bookDetails.getAuthor());
-            book.setGenre(bookDetails.getGenre());
-            book.setIsbnNo(bookDetails.getIsbnNo());
-            book.setImg(bookDetails.getImg());
-
-            // update copiesAvailable field according to update in the total copies of the
-            // book
-            Integer totalCopiesInDb = book.getTotalCopies();
-            Integer totalCopiesFromUser = bookDetails.getTotalCopies();
-            Integer copiesAvailable = book.getCopiesAvailable();
-
-            // it will edit copiesAvailable according to totalCopies even if it is lesser or
-            // greater
-            if (totalCopiesInDb != totalCopiesFromUser) {
-                book.setCopiesAvailable(copiesAvailable + (totalCopiesFromUser - totalCopiesInDb));
-            }
-
-            // setting total after the copiesAvailable
-            book.setTotalCopies(bookDetails.getTotalCopies());
-
-            return bookRepository.save(book);
-
-        } catch (NoSuchElementException e) {
+        if (!optionalBook.isPresent())
             return null;
+
+        BookModel bookFromDb = optionalBook.get();
+
+        // best practice to update each field individually
+        bookFromDb.setTitle(bookDetails.getTitle());
+        bookFromDb.setAuthor(bookDetails.getAuthor());
+        bookFromDb.setGenre(bookDetails.getGenre());
+        bookFromDb.setIsbnNo(bookDetails.getIsbnNo());
+        bookFromDb.setImg(bookDetails.getImg());
+
+        // update copiesAvailable field according to update in the total copies of the
+        // book
+        Integer totalCopiesInDb = bookFromDb.getTotalCopies();
+        Integer totalCopiesFromUser = bookDetails.getTotalCopies();
+        Integer copiesAvailable = bookFromDb.getCopiesAvailable();
+
+        // it will edit copiesAvailable according to totalCopies even if it is lesser or
+        // greater
+        if (totalCopiesInDb != totalCopiesFromUser) {
+            bookFromDb.setCopiesAvailable(copiesAvailable + (totalCopiesFromUser - totalCopiesInDb));
         }
+
+        // setting total after the copiesAvailable
+        bookFromDb.setTotalCopies(bookDetails.getTotalCopies());
+
+        return bookRepository.save(bookFromDb);
+
     }
 
     @Override
@@ -149,12 +146,12 @@ public class BookServiceImpl implements BookService {
         if (!optionalBook.isPresent()) // return null if book not present
             return null;
 
-        BookModel book = optionalBook.get();
+        BookModel bookFromDb = optionalBook.get();
 
-        Integer copiesAvailable = book.getCopiesAvailable();
-        book.setCopiesAvailable(--copiesAvailable);
+        Integer copiesAvailable = bookFromDb.getCopiesAvailable();
+        bookFromDb.setCopiesAvailable(--copiesAvailable);
 
-        bookRepository.save(book);
+        bookRepository.save(bookFromDb);
 
         return orderDetails;
     }

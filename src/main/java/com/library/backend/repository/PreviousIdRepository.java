@@ -2,12 +2,12 @@ package com.library.backend.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.library.backend.model.PreviousIdModel;
+import com.library.backend.model.PreviousId;
 
-public interface PreviousIdRepository extends MongoRepository<PreviousIdModel, String> {
+public interface PreviousIdRepository extends MongoRepository<PreviousId, String> {
 
-    PreviousIdModel findByType(String type);
+    PreviousId findByType(String type);
 
-    PreviousIdModel save(PreviousIdModel previousIdModel);
+    PreviousId save(PreviousId previousIdModel);
 
 }

@@ -7,9 +7,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.library.backend.model.BookModel;
-import com.library.backend.model.OrderModel;
-import com.library.backend.model.PreviousIdModel;
+import com.library.backend.model.Book;
+import com.library.backend.model.Order;
+import com.library.backend.model.PreviousId;
 import com.library.backend.repository.BookRepository;
 import com.library.backend.repository.OrderRepository;
 import com.library.backend.repository.PreviousIdRepository;
@@ -27,12 +27,12 @@ public class BookServiceImpl implements BookService {
     private OrderRepository orderRepository;
 
     @Override
-    public BookModel addBook(BookModel bookDetails) {
+    public Book addBook(Book bookDetails) {
 
         if (bookRepository.existsByIsbnNo(bookDetails.getIsbnNo()))
             return null;
 
-        PreviousIdModel previousIdModel = previousIdRepository.findByType("book");
+        PreviousId previousIdModel = previousIdRepository.findByType("book");
 
         Integer previousBookId = previousIdModel.getPreviousId();
 
@@ -53,13 +53,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookModel> getAllBooks() {
+    public List<Book> getAllBooks() {
         return bookRepository.findAll();
     }
 
     @Override
-    public BookModel getOneBook(String bookId) {
-        Optional<BookModel> optionalBook = bookRepository.findById(bookId);
+    public Book getOneBook(String bookId) {
+        Optional<Book> optionalBook = bookRepository.findById(bookId);
 
         if (!optionalBook.isPresent())
             return null;
@@ -68,14 +68,14 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookModel updateBook(String bookId, BookModel bookDetails) {
+    public Book updateBook(String bookId, Book bookDetails) {
 
-        Optional<BookModel> optionalBook = bookRepository.findById(bookId);
+        Optional<Book> optionalBook = bookRepository.findById(bookId);
 
         if (!optionalBook.isPresent())
             return null;
 
-        BookModel bookFromDb = optionalBook.get();
+        Book bookFromDb = optionalBook.get();
 
         // best practice to update each field individually
         bookFromDb.setTitle(bookDetails.getTitle());
@@ -113,12 +113,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public OrderModel checkoutOrder(OrderModel orderDetails) {
+    public Order checkoutOrder(Order orderDetails) {
 
         String userId = orderDetails.getUserId();
         String bookId = orderDetails.getBookId();
 
-        List<OrderModel> orderModelList = orderRepository.findByUserId(userId);
+        List<Order> orderModelList = orderRepository.findByUserId(userId);
 
         // a user can only checkout maximum of two books at a time
         if (orderModelList.size() > 1)
@@ -129,7 +129,7 @@ public class BookServiceImpl implements BookService {
         orderModelList.add(orderDetails);
         orderRepository.saveAll(orderModelList); // saveAll saves iterable OrderModel
 
-        PreviousIdModel previousIdModel = previousIdRepository.findByType("book");
+        PreviousId previousIdModel = previousIdRepository.findByType("book");
 
         Integer previousOrderId = previousIdModel.getPreviousId();
 
@@ -142,11 +142,11 @@ public class BookServiceImpl implements BookService {
         previousIdRepository.save(previousIdModel);
 
         // update availableCopies in book
-        Optional<BookModel> optionalBook = bookRepository.findById(bookId);
+        Optional<Book> optionalBook = bookRepository.findById(bookId);
         if (!optionalBook.isPresent()) // return null if book not present
             return null;
 
-        BookModel bookFromDb = optionalBook.get();
+        Book bookFromDb = optionalBook.get();
 
         Integer copiesAvailable = bookFromDb.getCopiesAvailable();
         bookFromDb.setCopiesAvailable(--copiesAvailable);

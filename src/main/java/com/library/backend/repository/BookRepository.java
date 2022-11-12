@@ -5,17 +5,17 @@ import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.library.backend.model.BookModel;
+import com.library.backend.model.Book;
 
-public interface BookRepository extends MongoRepository<BookModel, String> {
+public interface BookRepository extends MongoRepository<Book, String> {
 
-    Boolean existsByIsbnNo(String isbnNo);
+    boolean existsByIsbnNo(String isbnNo);
 
-    BookModel save(BookModel bookDetails);
+    Book save(Book bookDetails);
 
-    List<BookModel> findAll();
+    List<Book> findAll();
 
-    Optional<BookModel> findById(String bookId);
+    Optional<Book> findById(String bookId);
 
     boolean existsById(String bookId);
 

@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.library.backend.model.OrderModel;
+import com.library.backend.model.Order;
 
-public interface OrderRepository extends MongoRepository<OrderModel, String> {
+public interface OrderRepository extends MongoRepository<Order, String> {
 
-    List<OrderModel> findByUserId(String userId);
+    List<Order> findByUserId(String userId);
 
 }

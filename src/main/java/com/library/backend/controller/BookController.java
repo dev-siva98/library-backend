@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.library.backend.model.BookModel;
-import com.library.backend.model.OrderModel;
+import com.library.backend.model.Book;
+import com.library.backend.model.Order;
 import com.library.backend.services.BookServiceImpl;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -26,22 +26,22 @@ public class BookController {
     private BookServiceImpl bookServiceImpl;
 
     @PostMapping("/addbook")
-    public BookModel addBook(@RequestBody BookModel bookData) {
+    public Book addBook(@RequestBody Book bookData) {
         return bookServiceImpl.addBook(bookData);
     }
 
     @GetMapping("/get/all")
-    public List<BookModel> getAllBooks() {
+    public List<Book> getAllBooks() {
         return bookServiceImpl.getAllBooks();
     }
 
     @GetMapping("/get/{id}")
-    public BookModel getOneBook(@PathVariable("id") String bookId) {
+    public Book getOneBook(@PathVariable("id") String bookId) {
         return bookServiceImpl.getOneBook(bookId);
     }
 
     @PutMapping("/update/{id}")
-    public BookModel updateBook(@PathVariable("id") String bookId, @RequestBody BookModel bookDetails) {
+    public Book updateBook(@PathVariable("id") String bookId, @RequestBody Book bookDetails) {
         return bookServiceImpl.updateBook(bookId, bookDetails);
     }
 
@@ -51,7 +51,7 @@ public class BookController {
     }
 
     @PostMapping("/checkout")
-    public OrderModel checkoutOrder(@RequestBody OrderModel orderDetails) {
+    public Order checkoutOrder(@RequestBody Order orderDetails) {
         return bookServiceImpl.checkoutOrder(orderDetails);
     }
 }

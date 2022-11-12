@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.library.backend.model.UserModel;
+import com.library.backend.model.User;
 import com.library.backend.services.UserServiceImpl;
 
 
@@ -24,22 +24,22 @@ public class UserController {
     private UserServiceImpl userServiceImpl;
 
     @PostMapping("/signup")
-    public UserModel signup(@RequestBody UserModel userDetails) {
+    public User signup(@RequestBody User userDetails) {
         return userServiceImpl.createUser(userDetails);
     }
 
     @PostMapping("/login")
-    public UserModel login(@RequestBody UserModel userDetails) {
+    public User login(@RequestBody User userDetails) {
         return userServiceImpl.userLogin(userDetails);
     }
 
     @GetMapping("/get/all")
-    public List<UserModel> getAllUsers() {
+    public List<User> getAllUsers() {
         return userServiceImpl.getAllUsers();
     }
 
     @GetMapping("/get/{id}")
-    public UserModel getOneUser(@PathVariable("id") String userId) {
+    public User getOneUser(@PathVariable("id") String userId) {
         return userServiceImpl.getOneUser(userId);
     }
 }

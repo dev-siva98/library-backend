@@ -2,16 +2,16 @@ package com.library.backend.services;
 
 import java.util.List;
 
-import com.library.backend.model.UserModel;
+import com.library.backend.model.User;
 
 public interface UserService {
 
-    public UserModel createUser(UserModel userDetails);
+    public User createUser(User userDetails);
 
-    public UserModel userLogin(UserModel userDetails);
+    public User userLogin(User userDetails);
 
-    public List<UserModel> getAllUsers();
+    public List<User> getAllUsers();
 
-    public UserModel getOneUser(String userId);
+    public User getOneUser(String userId);
 
 }

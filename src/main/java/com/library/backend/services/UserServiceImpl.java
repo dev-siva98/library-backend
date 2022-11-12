@@ -7,8 +7,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.library.backend.model.PreviousIdModel;
-import com.library.backend.model.UserModel;
+import com.library.backend.model.PreviousId;
+import com.library.backend.model.User;
 import com.library.backend.repository.PreviousIdRepository;
 import com.library.backend.repository.UserRepository;
 
@@ -22,14 +22,14 @@ public class UserServiceImpl implements UserService {
     private PreviousIdRepository previousIdRepository;
 
     @Override
-    public UserModel createUser(UserModel userDetails) {
+    public User createUser(User userDetails) {
 
         if (userRepository.existsByEmail(userDetails.getEmail())) {
             return null;
         }
 
         // get document contains previous id
-        PreviousIdModel previousIdModel = previousIdRepository.findByType("user");
+        PreviousId previousIdModel = previousIdRepository.findByType("user");
 
         Integer previousUserId = previousIdModel.getPreviousId();
 
@@ -49,21 +49,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserModel userLogin(UserModel userDetails) {
-        UserModel user = userRepository.findByEmailAndPassword(userDetails.getEmail(), userDetails.getPassword());
+    public User userLogin(User userDetails) {
+        User user = userRepository.findByEmailAndPassword(userDetails.getEmail(), userDetails.getPassword());
         if (user == null)
             return null;
         return user;
     }
 
     @Override
-    public List<UserModel> getAllUsers() {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
     @Override
-    public UserModel getOneUser(String userId) {
-        Optional<UserModel> optionalUser = userRepository.findById(userId);
+    public User getOneUser(String userId) {
+        Optional<User> optionalUser = userRepository.findById(userId);
 
         if (!optionalUser.isPresent())
             return null;

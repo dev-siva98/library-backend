@@ -2,22 +2,22 @@ package com.library.backend.services;
 
 import java.util.List;
 
-import com.library.backend.model.BookModel;
-import com.library.backend.model.OrderModel;
+import com.library.backend.model.Book;
+import com.library.backend.model.Order;
 
 
 public interface BookService {
 
-    public BookModel addBook(BookModel bookDetails);
+    public Book addBook(Book bookDetails);
 
-    public List<BookModel> getAllBooks();
+    public List<Book> getAllBooks();
 
-    public BookModel getOneBook(String bookId);
+    public Book getOneBook(String bookId);
 
-    public BookModel updateBook(String bookId, BookModel bookDetails);
+    public Book updateBook(String bookId, Book bookDetails);
 
     public Boolean deleteBook(String bookId);
 
-    public OrderModel checkoutOrder(OrderModel orderDetails);
+    public Order checkoutOrder(Order orderDetails);
 
 }

@@ -5,18 +5,18 @@ import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.library.backend.model.UserModel;
+import com.library.backend.model.User;
 
-public interface UserRepository extends MongoRepository<UserModel, String> {
+public interface UserRepository extends MongoRepository<User, String> {
 
-    Boolean existsByEmail(String email);
+    boolean existsByEmail(String email);
 
-    UserModel findByEmailAndPassword(String email, String password);
+    User findByEmailAndPassword(String email, String password);
 
-    UserModel save(UserModel userDetails);
+    User save(User userDetails);
 
-    List<UserModel> findAll();
+    List<User> findAll();
 
-    Optional<UserModel> findById(String userId);
+    Optional<User> findById(String userId);
 
 }

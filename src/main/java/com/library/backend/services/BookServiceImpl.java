@@ -24,7 +24,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book addBook(Book bookDetails) {
 
-        if (bookRepository.existsByIsbnNo(bookDetails.getIsbnNumber()))
+        if (bookRepository.existsByIsbnNumber(bookDetails.getIsbnNumber()))
             return null;
 
         PreviousId previousIdModel = previousIdRepository.findByType("book");

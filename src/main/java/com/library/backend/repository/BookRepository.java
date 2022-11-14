@@ -9,7 +9,7 @@ import com.library.backend.model.Book;
 
 public interface BookRepository extends MongoRepository<Book, String> {
 
-    boolean existsByIsbnNo(String isbnNo);
+    boolean existsByIsbnNumber(String isbnNo);
 
     Book save(Book bookDetails);
 

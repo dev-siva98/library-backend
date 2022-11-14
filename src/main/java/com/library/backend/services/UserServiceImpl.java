@@ -80,6 +80,34 @@ public class UserServiceImpl implements UserService {
         return optionalUser.get();
     }
 
-    
+    @Override
+    public User checkoutBook(String userId, String bookId) {
+
+        User userFromDb = userRepository.findById(userId).get();
+
+        List<Order> orderedBooks = userFromDb.getOrderedBooks();
+
+        order.setCreatedAt(new Date());
+        order.setBookId(bookId);
+
+        // max count is 2
+        if (orderedBooks.size() > 1) {
+            return null;
+        }
+
+        orderedBooks.add(order);
+
+        userFromDb.setOrderedBooks(orderedBooks);
+
+        // update availableCopies in book
+        Book bookFromDb = bookRepository.findById(bookId).get();
+
+        Integer copiesAvailableForCheckout = bookFromDb.getCopiesAvailableForCheckout();
+        bookFromDb.setCopiesAvailableForCheckout(--copiesAvailableForCheckout);
+
+        bookRepository.save(bookFromDb);
+
+        return userRepository.save(userFromDb);
+    }
 
 }

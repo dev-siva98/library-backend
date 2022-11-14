@@ -54,6 +54,7 @@ public class UserServiceImpl implements UserService {
         previousIdRepository.save(previousIdModel);
 
         userDetails.setCreatedAt(new Date());
+        userDetails.setUserRole("USER");
         return userRepository.save(userDetails);
     }
 

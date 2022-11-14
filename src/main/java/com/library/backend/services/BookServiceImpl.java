@@ -8,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.library.backend.model.Book;
-import com.library.backend.model.Order;
 import com.library.backend.model.PreviousId;
 import com.library.backend.repository.BookRepository;
-import com.library.backend.repository.OrderRepository;
 import com.library.backend.repository.PreviousIdRepository;
 
 @Component
@@ -23,13 +21,10 @@ public class BookServiceImpl implements BookService {
     @Autowired
     private PreviousIdRepository previousIdRepository;
 
-    @Autowired
-    private OrderRepository orderRepository;
-
     @Override
     public Book addBook(Book bookDetails) {
 
-        if (bookRepository.existsByIsbnNo(bookDetails.getIsbnNo()))
+        if (bookRepository.existsByIsbnNo(bookDetails.getIsbnNumber()))
             return null;
 
         PreviousId previousIdModel = previousIdRepository.findByType("book");
@@ -45,7 +40,7 @@ public class BookServiceImpl implements BookService {
         previousIdRepository.save(previousIdModel);
 
         // initially set copiesAvailable same as totalCopies
-        bookDetails.setCopiesAvailable(bookDetails.getTotalCopies());
+        bookDetails.setCopiesAvailableForCheckout(bookDetails.getTotalNumberOfCopies());
 
         bookDetails.setCreatedAt(new Date());
 
@@ -81,23 +76,23 @@ public class BookServiceImpl implements BookService {
         bookFromDb.setTitle(bookDetails.getTitle());
         bookFromDb.setAuthor(bookDetails.getAuthor());
         bookFromDb.setGenre(bookDetails.getGenre());
-        bookFromDb.setIsbnNo(bookDetails.getIsbnNo());
-        bookFromDb.setImg(bookDetails.getImg());
+        bookFromDb.setIsbnNumber(bookDetails.getIsbnNumber());
+        bookFromDb.setImageUrl(bookDetails.getImageUrl());
 
         // update copiesAvailable field according to update in the total copies of the
         // book
-        Integer totalCopiesInDb = bookFromDb.getTotalCopies();
-        Integer totalCopiesFromUser = bookDetails.getTotalCopies();
-        Integer copiesAvailable = bookFromDb.getCopiesAvailable();
+        Integer totalNumberOfCopiesInDb = bookFromDb.getTotalNumberOfCopies();
+        Integer totalNumberOfCopiesFromUser = bookDetails.getTotalNumberOfCopies();
+        Integer copiesAvailableForCheckoutInDb = bookFromDb.getCopiesAvailableForCheckout();
 
-        // it will edit copiesAvailable according to totalCopies even if it is lesser or
-        // greater
-        if (totalCopiesInDb != totalCopiesFromUser) {
-            bookFromDb.setCopiesAvailable(copiesAvailable + (totalCopiesFromUser - totalCopiesInDb));
+        // edit copiesAvailable according to totalCopies even if it is lesser or greater
+        if (totalNumberOfCopiesInDb != totalNumberOfCopiesFromUser) {
+            bookFromDb.setCopiesAvailableForCheckout(
+                    copiesAvailableForCheckoutInDb + (totalNumberOfCopiesFromUser - totalNumberOfCopiesInDb));
         }
 
-        // setting total after the copiesAvailable
-        bookFromDb.setTotalCopies(bookDetails.getTotalCopies());
+        // setting total after the copiesAvailable updated
+        bookFromDb.setTotalNumberOfCopies(bookDetails.getTotalNumberOfCopies());
 
         return bookRepository.save(bookFromDb);
 
@@ -112,48 +107,48 @@ public class BookServiceImpl implements BookService {
         return false;
     }
 
-    @Override
-    public Order checkoutOrder(Order orderDetails) {
+    // @Override
+    // public Order checkoutOrder(Order orderDetails) {
 
-        String userId = orderDetails.getUserId();
-        String bookId = orderDetails.getBookId();
+    // String userId = orderDetails.getUserId();
+    // String bookId = orderDetails.getBookId();
 
-        List<Order> orderModelList = orderRepository.findByUserId(userId);
+    // List<Order> orderModelList = orderRepository.findByUserId(userId);
 
-        // a user can only checkout maximum of two books at a time
-        if (orderModelList.size() > 1)
-            return null;
+    // // a user can only checkout maximum of two books at a time
+    // if (orderModelList.size() > 1)
+    // return null;
 
-        orderDetails.setCreatedAt(new Date());
+    // orderDetails.setCreatedAt(new Date());
 
-        orderModelList.add(orderDetails);
-        orderRepository.saveAll(orderModelList); // saveAll saves iterable OrderModel
+    // orderModelList.add(orderDetails);
+    // orderRepository.saveAll(orderModelList); // saveAll saves iterable OrderModel
 
-        PreviousId previousIdModel = previousIdRepository.findByType("book");
+    // PreviousId previousIdModel = previousIdRepository.findByType("book");
 
-        Integer previousOrderId = previousIdModel.getPreviousId();
+    // Integer previousOrderId = previousIdModel.getPreviousId();
 
-        if (previousOrderId < 9)
-            orderDetails.setId("OD00" + ++previousOrderId);
-        else
-            orderDetails.setId("OD0" + ++previousOrderId);
+    // if (previousOrderId < 9)
+    // orderDetails.setId("OD00" + ++previousOrderId);
+    // else
+    // orderDetails.setId("OD0" + ++previousOrderId);
 
-        previousIdModel.setPreviousId(previousOrderId);
-        previousIdRepository.save(previousIdModel);
+    // previousIdModel.setPreviousId(previousOrderId);
+    // previousIdRepository.save(previousIdModel);
 
-        // update availableCopies in book
-        Optional<Book> optionalBook = bookRepository.findById(bookId);
-        if (!optionalBook.isPresent()) // return null if book not present
-            return null;
+    // // update availableCopies in book
+    // Optional<Book> optionalBook = bookRepository.findById(bookId);
+    // if (!optionalBook.isPresent()) // return null if book not present
+    // return null;
 
-        Book bookFromDb = optionalBook.get();
+    // Book bookFromDb = optionalBook.get();
 
-        Integer copiesAvailable = bookFromDb.getCopiesAvailable();
-        bookFromDb.setCopiesAvailable(--copiesAvailable);
+    // Integer copiesAvailable = bookFromDb.getCopiesAvailable();
+    // bookFromDb.setCopiesAvailable(--copiesAvailable);
 
-        bookRepository.save(bookFromDb);
+    // bookRepository.save(bookFromDb);
 
-        return orderDetails;
-    }
+    // return orderDetails;
+    // }
 
 }

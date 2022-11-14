@@ -7,8 +7,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.library.backend.model.Book;
+import com.library.backend.model.Order;
 import com.library.backend.model.PreviousId;
 import com.library.backend.model.User;
+import com.library.backend.repository.BookRepository;
 import com.library.backend.repository.PreviousIdRepository;
 import com.library.backend.repository.UserRepository;
 
@@ -20,6 +23,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PreviousIdRepository previousIdRepository;
+
+    @Autowired
+    private BookRepository bookRepository;
+
+    @Autowired
+    private Order order;
 
     @Override
     public User createUser(User userDetails) {
@@ -70,5 +79,7 @@ public class UserServiceImpl implements UserService {
 
         return optionalUser.get();
     }
+
+    
 
 }

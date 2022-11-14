@@ -14,4 +14,6 @@ public interface UserService {
 
     public User getOneUser(String userId);
 
+    public User checkoutBook(String userId, String bookId);
+
 }

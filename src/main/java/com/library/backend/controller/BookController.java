@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.library.backend.model.Book;
-import com.library.backend.model.Order;
 import com.library.backend.services.BookServiceImpl;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -50,8 +49,4 @@ public class BookController {
         return bookServiceImpl.deleteBook(bookId);
     }
 
-    @PostMapping("/checkout")
-    public Order checkoutOrder(@RequestBody Order orderDetails) {
-        return bookServiceImpl.checkoutOrder(orderDetails);
-    }
 }

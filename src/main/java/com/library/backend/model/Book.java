@@ -15,10 +15,10 @@ public class Book {
     private String id;
     private String title;
     private String author;
-    private String isbnNo;
+    private String isbnNumber;
     private String genre;
-    private String img;
-    private Integer totalCopies;
-    private Integer copiesAvailable;
+    private String imageUrl;
+    private Integer totalNumberOfCopies;
+    private Integer copiesAvailableForCheckout;
     private Date createdAt;
 }

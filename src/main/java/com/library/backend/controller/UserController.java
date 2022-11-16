@@ -47,4 +47,9 @@ public class UserController {
     public User checkoutBook(@PathVariable("userId") String userId, @PathVariable("bookId") String bookId) {
         return userServiceImpl.checkoutBook(userId, bookId);
     }
+
+    @PutMapping("/checkin/{userId}/{bookId}")
+    public User checkinBook(@PathVariable("userId") String userId, @PathVariable("bookId") String bookId) {
+        return userServiceImpl.checkinBook(userId, bookId);
+    }
 }

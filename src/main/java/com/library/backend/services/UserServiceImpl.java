@@ -111,4 +111,23 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(userFromDb);
     }
 
+    @Override
+    public User checkinBook(String userId, String bookId) {
+        User userFromDb = userRepository.findById(userId).get();
+
+        List<Order> orderedBooks = userFromDb.getOrderedBooks();
+
+        // lamda function to remove object from array with condition
+        orderedBooks.removeIf(book -> book.getBookId().equals(bookId));
+
+        Book bookFromdb = bookRepository.findById(bookId).get();
+
+        Integer copiesAvailableForCheckout = bookFromdb.getCopiesAvailableForCheckout();
+        bookFromdb.setCopiesAvailableForCheckout(++copiesAvailableForCheckout);
+
+        bookRepository.save(bookFromdb);
+
+        return userRepository.save(userFromDb);
+    }
+
 }

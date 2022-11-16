@@ -16,4 +16,6 @@ public interface UserService {
 
     public User checkoutBook(String userId, String bookId);
 
+    public User checkinBook(String userId, String bookId);
+
 }

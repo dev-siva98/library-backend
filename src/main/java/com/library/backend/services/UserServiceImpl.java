@@ -88,13 +88,13 @@ public class UserServiceImpl implements UserService {
 
         List<Order> orderedBooks = userFromDb.getOrderedBooks();
 
-        order.setCreatedAt(new Date());
-        order.setBookId(bookId);
-
         // max count is 2
         if (orderedBooks.size() > 1) {
             return null;
         }
+
+        order.setCreatedAt(new Date());
+        order.setBookId(bookId);
 
         orderedBooks.add(order);
 

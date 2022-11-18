@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.library.backend.model.Book;
 import com.library.backend.model.PreviousId;
 import com.library.backend.repository.BookRepository;
 import com.library.backend.repository.PreviousIdRepository;
 
-@Component
+@Service
 public class BookServiceImpl implements BookService {
 
     @Autowired

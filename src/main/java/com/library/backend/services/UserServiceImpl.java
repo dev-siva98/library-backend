@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.library.backend.model.Book;
 import com.library.backend.model.Order;
@@ -15,7 +15,7 @@ import com.library.backend.repository.BookRepository;
 import com.library.backend.repository.PreviousIdRepository;
 import com.library.backend.repository.UserRepository;
 
-@Component
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired

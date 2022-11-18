@@ -107,48 +107,4 @@ public class BookServiceImpl implements BookService {
         return false;
     }
 
-    // @Override
-    // public Order checkoutOrder(Order orderDetails) {
-
-    // String userId = orderDetails.getUserId();
-    // String bookId = orderDetails.getBookId();
-
-    // List<Order> orderModelList = orderRepository.findByUserId(userId);
-
-    // // a user can only checkout maximum of two books at a time
-    // if (orderModelList.size() > 1)
-    // return null;
-
-    // orderDetails.setCreatedAt(new Date());
-
-    // orderModelList.add(orderDetails);
-    // orderRepository.saveAll(orderModelList); // saveAll saves iterable OrderModel
-
-    // PreviousId previousIdModel = previousIdRepository.findByType("book");
-
-    // Integer previousOrderId = previousIdModel.getPreviousId();
-
-    // if (previousOrderId < 9)
-    // orderDetails.setId("OD00" + ++previousOrderId);
-    // else
-    // orderDetails.setId("OD0" + ++previousOrderId);
-
-    // previousIdModel.setPreviousId(previousOrderId);
-    // previousIdRepository.save(previousIdModel);
-
-    // // update availableCopies in book
-    // Optional<Book> optionalBook = bookRepository.findById(bookId);
-    // if (!optionalBook.isPresent()) // return null if book not present
-    // return null;
-
-    // Book bookFromDb = optionalBook.get();
-
-    // Integer copiesAvailable = bookFromDb.getCopiesAvailable();
-    // bookFromDb.setCopiesAvailable(--copiesAvailable);
-
-    // bookRepository.save(bookFromDb);
-
-    // return orderDetails;
-    // }
-
 }
